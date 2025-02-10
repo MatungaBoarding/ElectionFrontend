@@ -1,4 +1,4 @@
-let base_url = "https://healingkidneys.pythonanywhere.com";
+let base_url = "https://matungaboarding.pythonanywhere.com";
 // let base_url = "https://3c91-2603-6081-2400-17f4-2dff-eb2d-2978-6a55.ngrok-free.app"
 
 export let login_url = base_url + "/election/election_auth/";
