@@ -160,7 +160,7 @@ class Info extends React.Component {
                             </div>
 
                             <div className="m-3">
-                                <Photo mbmID={window.location.href.split("/").pop()}/>
+                                <Photo mbmID={window.location.href.split("/").pop()} type="slip"/>
                             </div>
 
                             {this.state.slip_loading ? (

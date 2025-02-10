@@ -59,6 +59,12 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: 10,
       color: '#666666'
+    },
+    signatureLine: {
+      marginTop: 20,
+    },
+    signatureText: {
+      marginTop: 10,
     }
   });
   
@@ -85,9 +91,22 @@ const styles = StyleSheet.create({
           <Text style={styles.footer}>Created by: {data.agentName}  ----------  Location: {data.location} ---------- Table Id: {data.tableId}</Text>
         </View>
       </Page>
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.wrapper}>
+          <Text style={styles.acknowledgmentText}>
+            I acknowledge that I, {data.name}, was present at Matunga Boarding for voting. I have voted and I sign this slip as proof.
+          </Text>
+          <View style={styles.signatureLine}>
+            <Text>______________________________</Text>
+          </View>
+          <View style={styles.signatureText}>
+            <Text>{data.name}</Text>
+          </View>
+        </View>
+      </Page>
     </Document>
   );
-
 
 // For programmatic PDF generation (e.g., from a button click)
 export const generatePDF = async (data) => {
