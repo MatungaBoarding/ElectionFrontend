@@ -31,7 +31,7 @@ class Popup extends React.Component {
                     <h2 className="text-lg font-bold text-center">Upload sign</h2>
 
                     <div className='flex justify-center items-center mt-4'>
-                        <Photo mbmID={window.location.href.split("/").pop()} type="Sign" width={1000} height={1000}/>
+                        <Photo mbmID={window.location.href.split("/").pop()} type="Sign" width={1920} height={1080} ext="png"/>
                     </div>
 
                     {/* <p className="mt-5 text-center">Are you sure you want to confirm your presence?</p> */}

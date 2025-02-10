@@ -5,7 +5,7 @@ const WebcamComponent = () => <Webcam />;
 
 
 
-const CaptureImage = ({capturedImage, setCapturedImage, name, uploadImage, width=220, height=200}) => {
+const CaptureImage = ({capturedImage, setCapturedImage, name, uploadImage, width=220, height=200, ext="jpeg"}) => {
 
   const videoConstraints = {
     width: width,
@@ -34,8 +34,9 @@ const CaptureImage = ({capturedImage, setCapturedImage, name, uploadImage, width
             audio={false}
             height={width}
             ref={webcamRef}
-            screenshotFormat="image/jpeg"
+            screenshotFormat={`image/${ext}`}
             width={height}
+            screenshotQuality={1.0}
             videoConstraints={videoConstraints}
           />
           <button 

@@ -3,7 +3,7 @@ import CaptureImage from "./InputElements/CaptureImage";
 import { ref, uploadBytes , getDownloadURL } from 'firebase/storage'
 import { GlobalContext } from '../globalConfig/firebase';
 
-const Photo = (mbmID, type="slip", width=220, height=200) => {
+const Photo = (mbmID, type="slip", width=220, height=200, ext="jpeg") => {
 
     const [capturedImage, setCapturedImage] = useState('')
     const [load, setLoad] = useState(false)
@@ -17,7 +17,7 @@ const Photo = (mbmID, type="slip", width=220, height=200) => {
         if (type === "slip"){
             path = `election/${mbmID["mbmID"]+".jpg"}`
         }else{
-            path = `election/${mbmID["mbmID"]+"_sign.jpg"}`
+            path = `election/${mbmID["mbmID"]+"_sign.png"}`
         }
         const imageRef = ref(fireb.storage, path)
         let snapshot = await uploadBytes(imageRef, img.file)
@@ -36,7 +36,7 @@ const Photo = (mbmID, type="slip", width=220, height=200) => {
 
     return (
         <div>
-            <CaptureImage capturedImage={capturedImage} setCapturedImage={setCapturedImage} name={""} uploadImage={uploadImage} width={width} height={height}/>
+            <CaptureImage capturedImage={capturedImage} setCapturedImage={setCapturedImage} name={""} uploadImage={uploadImage} width={width} height={height} ext={ext}/>
         </div>
     )
 }
