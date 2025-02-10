@@ -10,7 +10,7 @@ const CaptureImage = ({capturedImage, setCapturedImage, name, uploadImage, width
   const videoConstraints = {
     width: width,
     height: height,
-    facingMode: { exact: "environment" }
+    facingMode: "environment"
   };
 
   const webcamRef = useRef(null);

@@ -24,6 +24,9 @@ const QRCodeReader = () => {
         delay={300}
         onScan={handleScan}
         onError={handleError}
+        constraints={{
+            video: { facingMode: "environment" }
+        }}
         style={{ width: "100%" }}
       />
       {scanResult && (
