@@ -21,7 +21,9 @@ class Info extends React.Component {
         sched_date_e: "",
         admin: false,
 
-        slip_loading: false
+        slip_loading: false,
+
+        error_text: "Loading..."
     }
 
 
@@ -33,9 +35,12 @@ class Info extends React.Component {
             response = await unprotected_api_call(member_by_id_url, {"MemId": id}) 
             if(response.status === 200){
                 let text = JSON.parse(await response.text())
-                this.setState({userinfo: text["data"]})
+                if(text["val"] === false)   
+                    this.setState({userinfo: "", error_text: text["data"]["error"]})
+                else    
+                    this.setState({userinfo: text["data"], error_text: ""})
             }else{
-                this.setState({userinfo: ""})
+                this.setState({userinfo: "", error_text: "ERROR"})
             }
         } 
 
@@ -115,7 +120,7 @@ class Info extends React.Component {
                 <div className='flex justify-center items-center flex-col w-auto mt-20  rounded'>
 
                     {this.state.userinfo==="" ? (<>
-                        RECORD NOT FOUND
+                        {this.state.error_text}
                     </>):(
                         <div className='flex flex-col justify-center items-center h-1/2 w-full'>
                             <div className='flex justify-around bg-purple-600 text-white w-1/2 items-center m-1 p-2'>

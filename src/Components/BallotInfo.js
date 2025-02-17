@@ -89,7 +89,8 @@ class BallotInfo extends React.Component {
         popupOpen: false,
         popupOpenFinal: false,
         final: false,
-        firebase_url: ""
+        firebase_url: "",
+        errorTxt: "Loading ..."
     };
 
     async componentDidMount() {
@@ -99,7 +100,11 @@ class BallotInfo extends React.Component {
             const response = await unprotected_api_call(ballot_info_url, { "MemId": id });
             if (response.status === 200) {
                 let text = JSON.parse(await response.text());
-                this.setState({ userinfo: text["data"] });
+                if (text["val"] === false) {
+                    this.setState({ userinfo: "", errorTxt: text["data"]["error"] });
+                }else{
+                    this.setState({ userinfo: text["data"], errorTxt: "" });
+                }
             }
         }
     }
@@ -178,7 +183,7 @@ class BallotInfo extends React.Component {
                             ):(<></>)}
                         </div>
                     ) : (
-                        <p>NO RECORD FOUND</p>
+                        <p>{this.state.errorTxt}</p>
                     )}
                     <Popup isOpen={this.state.popupOpen} onClose={() => this.setState({ popupOpen: false })} onConfirm={this.handleConfirm} />
                     <PopupFinal isOpen={this.state.popupOpenFinal} onClose={() => this.setState({ popupOpenFinal: false })} onConfirm={this.handleConfirmFinal} />
