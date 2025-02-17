@@ -142,8 +142,6 @@ class BallotInfo extends React.Component {
 
     handleConfirmFinal = async () => {
         await this.confirmPresence();
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
-
         this.setState({ popupOpenFinal: false });
     };
 
@@ -183,7 +181,12 @@ class BallotInfo extends React.Component {
                             ):(<></>)}
                         </div>
                     ) : (
-                        <p>{this.state.errorTxt}</p>
+                        <div className="flex flex-col items-center">
+                            <p>{this.state.errorTxt}</p>
+                            <Link to={`/dashboard`} className="w-1/3 bg-purple-700 mt-10 text-white p-2 text-center block">
+                                Go back to scan
+                            </Link>
+                        </div>
                     )}
                     <Popup isOpen={this.state.popupOpen} onClose={() => this.setState({ popupOpen: false })} onConfirm={this.handleConfirm} />
                     <PopupFinal isOpen={this.state.popupOpenFinal} onClose={() => this.setState({ popupOpenFinal: false })} onConfirm={this.handleConfirmFinal} />
