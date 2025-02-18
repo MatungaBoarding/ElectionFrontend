@@ -1,5 +1,5 @@
-let base_url = "https://matungaboarding.pythonanywhere.com";
-// let base_url = "https://3c91-2603-6081-2400-17f4-2dff-eb2d-2978-6a55.ngrok-free.app"
+// let base_url = "https://matungaboarding.pythonanywhere.com";
+let base_url = "https://3c91-2603-6081-2400-17f4-2dff-eb2d-2978-6a55.ngrok-free.app"
 
 export let login_url = base_url + "/election/election_auth/";
 export let global_search_url = base_url + "/election/global_search/"
@@ -8,6 +8,8 @@ export let member_by_id_url = base_url + "/election/member_by_id/"
 export let create_slip_url = base_url + "/election/create_slip/"
 export let ballot_info_url = base_url + "/election/ballot_id_info/"
 export let confirm_presence_url = base_url + "/election/confirm_presence/"
+export let admin_info_url = base_url + "/election/admin_info/"
+export let admin_dashboard_url = base_url + "/election/admin_dashboard_view/"
 
 export let register_url = base_url + "/auth/register/";
 export let patient_form_url = base_url + "/service/patient_form/";
@@ -26,13 +28,25 @@ export let unprotected_api_call = async (url, data, type="POST") => {
     try{
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        var raw = JSON.stringify(data);
-        var requestOptions = {
-            method: type,
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow"
-        };
+        let raw
+        let requestOptions
+
+        if(type === "GET"){
+            requestOptions = {
+                method: 'GET',
+                redirect: 'follow',
+                headers: myHeaders
+            };
+        }else{
+            raw = JSON.stringify(data);
+            requestOptions = {
+                method: type,
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };    
+        }
+
         let response = await fetch(url, requestOptions);
         return response;
     } catch(e){

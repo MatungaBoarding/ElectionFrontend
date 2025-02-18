@@ -1,6 +1,6 @@
 import React from 'react';
+import CounterDashboard from './CounterAgent';
 import AdminDashboard from './Admin';
-import AgentDashboard from './Agent';
 import Navbar from './../Components/Navbar'
 import { AppBar } from '@mui/material';
 import BallotPage from './../Components/BallotPage';
@@ -12,6 +12,7 @@ class Dashboard extends React.Component {
           isLoading: false,
           counter: false,
           ballot: false,
+          admin: false
         }
     }
 
@@ -20,10 +21,13 @@ class Dashboard extends React.Component {
       user_data = JSON.parse(user_data)
       let counter_bool = user_data["isCountingAgent"]
       let ballot_bool = user_data["isBallotAgent"]
+      let admin_bool = user_data["isAdminAgent"]
       if(counter_bool){
-        this.setState({counter: true, ballot: false})
+        this.setState({counter: true, ballot: false, admin: false})
       }else if(ballot_bool){
-        this.setState({counter: false, ballot: true})
+        this.setState({counter: false, ballot: true, admin: false})
+      } else if(admin_bool){
+        this.setState({counter: false, ballot: false, admin: true})
       }
     }
 
@@ -34,8 +38,9 @@ class Dashboard extends React.Component {
               <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                 <Navbar />
               </AppBar>
-              {this.state.counter ? <AdminDashboard /> : <></>}
+              {this.state.counter ? <CounterDashboard /> : <></>}
               {this.state.ballot ? <BallotPage /> : <></>}
+              {this.state.admin ? <AdminDashboard /> : <></>}
             </div>
           </div>
         )

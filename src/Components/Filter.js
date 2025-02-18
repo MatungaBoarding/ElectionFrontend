@@ -8,16 +8,7 @@ class Filter extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          
-          //   first_name: "", last_name: "", phone: "", email: "", dob: new Date(),
-          
-          // address: "",city: "", state: "", pincode: "",
-
           memid: "", native_village: "None", first_name: "", last_name: "", dob: "", middle_name: "", pincode: "",
-          
-          hospital: "None", diagonosis: "None", criticalitiy: "None", insurance: "None",
-          esrd: "None", references: "None", sfreq: "None", sdate: "",
-          comments: "", created_at: "", created_by: "", sstatus: "None",
         
           results: [],
 
@@ -171,16 +162,28 @@ class Filter extends React.Component {
                                 </div>
                                 <div className="flex justify-center">
                                     <div className="w-full">
-                                        <Link 
-                                            onClick={(event) => {}} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer" 
-                                            to={`/info/${data.MemberID}`} 
-                                            state={{ "userinfo": data }} 
-                                            className="bg-purple-900 px-6 py-3 rounded-xl text-white text-lg text-center block"
-                                        >
-                                            INFO
-                                        </Link>
+                                        {this.props.type === "admin" ? (
+                                            <Link 
+                                                onClick={(event) => {}} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                to={`/admin_info/${data.MemberID}`} 
+                                                state={{ "userinfo": data }} 
+                                                className="bg-purple-900 px-6 py-3 rounded-xl text-white text-lg text-center block">
+                                                INFO
+                                            </Link>
+                                        ):(
+                                            <Link 
+                                                onClick={(event) => {}} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer" 
+                                                to={`/info/${data.MemberID}`} 
+                                                state={{ "userinfo": data }} 
+                                                className="bg-purple-900 px-6 py-3 rounded-xl text-white text-lg text-center block">
+                                              INFO
+                                            </Link>
+                                        )}
+                                        
                                     </div>
                                 </div>
 

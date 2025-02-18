@@ -14,20 +14,16 @@ import { MdLogout, MdAddCircle, MdBarChart, MdFilterAlt, MdCalendarMonth, MdNfc,
 import { ListItemButton } from '@mui/material';
 import Filter from './../Components/Filter';
 
-import Form from './../Components/Form';
-import Productivity from './../Components/Productivity';
-
 const drawerWidth = 250;
 
-class AgentDashboard extends React.Component {
+class AdminDashboard extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             isLoading: false,
-            form: true,
-            productivity: false,
-            summary: false,
-            calendar: false,
+            filter: false,
+            slipIssued: false,
+            ballotIssued: false
         }
     }
 
@@ -54,22 +50,16 @@ class AgentDashboard extends React.Component {
                     <Toolbar />
                     <Box sx={{ overflow: 'auto' }}>
                         <List color="primary">
-                            {["Patient Form", "Calendar", "Dashboard", "Productivity", "Filter", "Unscheduled Patients"].map((t, index) => (
+                            {["Filter", "Slip Issued", "Ballot Issued"].map((t, index) => (
                                 <ListItemButton
                                     key={t}
                                     onClick={() => {
-                                        if (t === "Patient Form") {
-                                            this.setState({ form: true, productivity: false, filter: false, unscheduled: false, summary: false, calendar: false})
-                                        } else if(t === "Calendar"){
-                                            this.setState({ form: false, productivity: false, filter: false, unscheduled: false, summary: false, calendar: true})
-                                        } else if(t === "Dashboard") {
-                                            this.setState({ form: false, productivity: false, filter: false, unscheduled: false, summary: true, calendar: false})
-                                        } else if (t === "Productivity") {
-                                            this.setState({ form: false, productivity: true, filter: false, unscheduled: false, summary: false, calendar: false})
-                                        } else if (t === "Filter" ) {
-                                            this.setState({ form: false, productivity: false, filter: true, unscheduled: false, summary: false, calendar: false})
-                                        } else if (t === "Unscheduled Patients") {
-                                            this.setState({ form: false, productivity: false, filter: false, unscheduled: true, summary: false, calendar: false})
+                                        if (t === "Filter") {
+                                            this.setState({ filter: true, slipIssued: false, ballotIssued: false })
+                                        } else if(t === "Slip Issued"){
+                                            this.setState({ filter: false, slipIssued: true, ballotIssued: false })
+                                        } else if(t === "Ballot Issued"){
+                                            this.setState({ filter: false, slipIssued: false, ballotIssued: true })
                                         }
                                     }}>
                                     <ListItemIcon sx={{ color: "#9333ea", fontSize: "25px" }}>
@@ -100,12 +90,9 @@ class AgentDashboard extends React.Component {
                 </Drawer>
                 <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                     <Toolbar />
-                    {this.state.form && (<Form />)}
-                    {/* {this.state.calendar && (<Calendar />)} */}
-                    {/* {this.state.summary && (<Summary />)} */}
-                    {this.state.productivity && (<Productivity />)}
                     {this.state.filter && (<Filter />)}
-                    {/* {this.state.unscheduled && (<Unscheduled />)} */}
+                    {this.state.slipIssued && (<Filter />)}
+                    {this.state.ballotIssued && (<Filter />)}
                 </Box>  
 
             </Box>
@@ -113,4 +100,4 @@ class AgentDashboard extends React.Component {
     }
 }
 
-export default AgentDashboard
+export default AdminDashboard

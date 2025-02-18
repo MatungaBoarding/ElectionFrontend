@@ -173,7 +173,7 @@ class BallotInfo extends React.Component {
 
                             {this.state.final ? (
                                 <div className='flex flex-col w-full items-center'>
-                                    <img src={this.state.firebase_url} alt="aadhar" className="w-40 h-40 mt-10" />
+                                    <img src={this.state.firebase_url} alt="sign" className="w-40 h-40 mt-10" />
                                     <button className='w-full bg-purple-700 mt-10 text-white p-2' onClick={() => this.setState({ popupOpenFinal: true })}>
                                         Confirm presence
                                     </button>

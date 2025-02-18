@@ -6,6 +6,7 @@ import Dashboard from './dashboard/Dashboard';
 import Info from './Components/info';
 import Search from './Components/Search';
 import BallotInfo from './Components/BallotInfo';
+import AdminInfo from "./Components/AdminInfo";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
               <Route path="/info/:id" element={<Info />} />
               <Route path="/search" element={<Search />} />
               <Route path="/ballot_info/:id" element={<BallotInfo />} />
+              <Route path="/admin_info/:id" element={<AdminInfo />} />
             </Routes>
           </Router>
         </div>
