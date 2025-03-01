@@ -97,7 +97,7 @@ class BallotInfo extends React.Component {
         const currentUrl = window.location.href;
         const id = currentUrl.split("/").pop();
         if (!this.state.userinfo) {
-            const response = await unprotected_api_call(ballot_info_url, { "MemId": id });
+            const response = await unprotected_api_call(ballot_info_url, { "AppId": id });
             if (response.status === 200) {
                 let text = JSON.parse(await response.text());
                 if (text["val"] === false) {
