@@ -115,7 +115,7 @@ class BallotInfo extends React.Component {
         let agent_data = localStorage.getItem("user_data")
         agent_data = JSON.parse(agent_data)
 
-        const response = await unprotected_api_call(confirm_presence_url, { "MemId": id, 'SignImageUrl': "", 'Agent': agent_data["user_email"] });
+        const response = await unprotected_api_call(confirm_presence_url, { "AppId": id, 'SignImageUrl': "", 'Agent': agent_data["user_email"], 'NonKyc': this.state.userinfo["MemberId"]===""?true:false });
         if (response.status === 200) {
             // link to ./dashboard
             this.setState({ popupOpenFinal: false });
@@ -158,11 +158,11 @@ class BallotInfo extends React.Component {
                         <div className="flex flex-col items-center">
                             {/* <h2 className="text-xl font-semibold mb-4">BALLOT INFO</h2> */}
                             <img src={this.state.userinfo["PhotoS3"]} alt="user" className="w-40 h-40 rounded-full" />
-
-                            <p className="text-lg font-bold mt-10">{this.state.userinfo["MemberId"]}</p>
+                            <p className="text-lg font-bold mt-10">{this.state.userinfo["MemberId"] === "" ? ("KYC PENDING"):(this.state.userinfo["MemberId"])}</p>
                             <p className="text-lg">{this.state.userinfo["Name"]}</p>
                             <p className="text-lg">Village: {this.state.userinfo["NativeVillage"]}</p>
-                            <p className="text-lg">DOB: {this.state.userinfo["DateOfBirth"]}</p>
+                            {this.state.userinfo["MemberId"] === "" ? (<></>):(<p className="text-lg"> DOB: {this.state.userinfo["DateOfBirth"]} </p>)}
+                            
                             
                             <Link to={`/dashboard`} className="w-1/2 bg-purple-700 mt-10 text-white p-2 text-center block">
                                 Scan again

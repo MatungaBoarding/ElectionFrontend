@@ -49,11 +49,13 @@ class Info extends React.Component {
     
     sync_slip_audit_date = async (url) => {
         let user_data = localStorage.getItem("user_data")
+        console.log(this.state.userinfo)
         user_data = JSON.parse(user_data)
         let data = {
-            "MemId": this.state.userinfo.MemberID,
+            "AppId": this.state.userinfo.ApplicationID,
             "PhotoUrl": url,
-            "Agent": user_data["user_email"]
+            "Agent": user_data["user_email"],
+            "NonKyc": this.state.userinfo.MemberID === "" ? true : false
         }
         let response = await unprotected_api_call(create_slip_url, data)
         if(response.status === 200 || response.status === 201){
@@ -63,7 +65,6 @@ class Info extends React.Component {
             alert("Server Error")
         }
     }
-
 
     generate_slip = async () => {
         this.setState({slip_loading: true})
