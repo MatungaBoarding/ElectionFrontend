@@ -89,6 +89,7 @@ class Filter extends React.Component {
 
 
     render(){
+        console.log(this.state.PhotoS3)
       return(
         <>
             <div className=' w-full flex justify-between'>
@@ -154,11 +155,16 @@ class Filter extends React.Component {
                         {this.state.results.map((data, key) => (
                             <div key={key} className='flex flex-col md:flex-row justify-center items-center bg-purple-200 p-4 rounded-lg border border-purple-300 gap-4 mx-20 my-2'>
                                 <div className="grid grid-cols-1 md:grid-cols-5 gap-4 flex-grow items-center text-center md:text-left">
-                                    <img src={data.PhotoS3} alt="no image" className='h-[100px] w-[100px] rounded-full mx-auto md:mx-0'/>
-                                    <h1 className='text-xl font-bold'>Membership ID: {data.MemberID || "NA"}</h1>
+                                    {data.PhotoS3 ? (
+                                        <img src={data.PhotoS3} alt="no image" className='h-[100px] w-[100px] rounded-full mx-auto md:mx-0'/>
+                                    ):(
+                                        <img src={"https://firebasestorage.googleapis.com/v0/b/mb-software-a20dc.appspot.com/o/election%2Fdefault_face.png?alt=media&token=1e1bf3ad-292d-492c-b0bc-ee08cbb48139"} alt="no image" className='h-[100px] w-[100px] rounded-full mx-auto md:mx-0'/>
+                                    )}
+
+                                    <h1 className='text-xl font-bold'>Membership ID: {data.MemberID || "NKYC"}</h1>
                                     <h1 className='text-xl font-bold'>Name: {`${data.FirstName} ${data.MiddleName} ${data.LastName}`}</h1>
                                     <h1 className='text-xl font-bold'>Village: {data.NativeVillage || "NA"}</h1>
-                                    <h1 className='text-xl font-bold'>DOB: {data.DateOfBirth || "NA"}</h1>
+                                    <h1 className='text-xl font-bold'>DOB: {data.DateOfBirth || "NKYC"}</h1>
                                 </div>
                                 <div className="flex justify-center">
                                     <div className="w-full">
@@ -177,7 +183,7 @@ class Filter extends React.Component {
                                                 onClick={(event) => {}} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer" 
-                                                to={`/info/${data.MemberID}`} 
+                                                to={`/info/${data.ApplicationID}`} 
                                                 state={{ "userinfo": data }} 
                                                 className="bg-purple-900 px-6 py-3 rounded-xl text-white text-lg text-center block">
                                               INFO

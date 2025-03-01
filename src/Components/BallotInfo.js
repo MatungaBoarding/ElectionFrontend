@@ -10,42 +10,42 @@ import Photo from './Photo';
 import { GlobalContext } from '../globalConfig/firebase';
 import { unprotected_api_call, ballot_info_url, confirm_presence_url } from "../api/api";
 
-class Popup extends React.Component {
-    state = {
-        loading: false,
-    };
+// class Popup extends React.Component {
+//     state = {
+//         loading: false,
+//     };
 
-    onConfirm = async () => {
-        this.setState({loading: true})
+//     onConfirm = async () => {
+//         this.setState({loading: true})
 
-        await this.props.onConfirm();
+//         await this.props.onConfirm();
         
-        this.setState({loading: false})
-    };
+//         this.setState({loading: false})
+//     };
 
-    render() {
-        if (!this.props.isOpen) return null;
-        return (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-md mx-auto">
-                    <h2 className="text-lg font-bold text-center">Upload sign</h2>
+//     render() {
+//         if (!this.props.isOpen) return null;
+//         return (
+//             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+//                 <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-md mx-auto">
+//                     <h2 className="text-lg font-bold text-center">Upload sign</h2>
 
-                    <div className='flex justify-center items-center mt-4'>
-                        <Photo mbmID={window.location.href.split("/").pop()} type="Sign" width={500} height={500} ext="png"/>
-                    </div>
+//                     <div className='flex justify-center items-center mt-4'>
+//                         <Photo mbmID={window.location.href.split("/").pop()} type="Sign" width={500} height={500} ext="png"/>
+//                     </div>
 
-                    {/* <p className="mt-5 text-center">Are you sure you want to confirm your presence?</p> */}
-                    <div className="flex justify-end mt-4">
-                        <button className="bg-gray-400 text-white px-4 py-2 rounded mr-2" onClick={this.props.onClose}>Cancel</button>
-                        <button className="bg-purple-900 text-white px-4 py-2 rounded" onClick={this.onConfirm}>
-                            {this.state.loading ? <VscLoading className='w-6 h-6 animate-spin' /> : "Confirm"}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
+//                     {/* <p className="mt-5 text-center">Are you sure you want to confirm your presence?</p> */}
+//                     <div className="flex justify-end mt-4">
+//                         <button className="bg-gray-400 text-white px-4 py-2 rounded mr-2" onClick={this.props.onClose}>Cancel</button>
+//                         <button className="bg-purple-900 text-white px-4 py-2 rounded" onClick={this.onConfirm}>
+//                             {this.state.loading ? <VscLoading className='w-6 h-6 animate-spin' /> : "Confirm"}
+//                         </button>
+//                     </div>
+//                 </div>
+//             </div>
+//         );
+//     }
+// }
 
 class PopupFinal extends React.Component {
     state = {
@@ -115,7 +115,7 @@ class BallotInfo extends React.Component {
         let agent_data = localStorage.getItem("user_data")
         agent_data = JSON.parse(agent_data)
 
-        const response = await unprotected_api_call(confirm_presence_url, { "MemId": id, 'SignImageUrl': this.state.firebase_url, 'Agent': agent_data["user_email"] });
+        const response = await unprotected_api_call(confirm_presence_url, { "MemId": id, 'SignImageUrl': "", 'Agent': agent_data["user_email"] });
         if (response.status === 200) {
             // link to ./dashboard
             this.setState({ popupOpenFinal: false });
@@ -167,18 +167,13 @@ class BallotInfo extends React.Component {
                             <Link to={`/dashboard`} className="w-1/2 bg-purple-700 mt-10 text-white p-2 text-center block">
                                 Scan again
                             </Link>
-                            <button className='w-1/2 bg-purple-700 mt-5 text-white p-2' onClick={() => this.setState({ popupOpen: true })}>
-                                Upload sign
-                            </button>
 
-                            {this.state.final ? (
+                            {/* {this.state.final ? ( */}
                                 <div className='flex flex-col w-full items-center'>
-                                    <img src={this.state.firebase_url} alt="sign" className="w-40 h-40 mt-10" />
                                     <button className='w-full bg-purple-700 mt-10 text-white p-2' onClick={() => this.setState({ popupOpenFinal: true })}>
                                         Confirm presence
                                     </button>
                                 </div>
-                            ):(<></>)}
                         </div>
                     ) : (
                         <div className="flex flex-col items-center">
@@ -188,7 +183,7 @@ class BallotInfo extends React.Component {
                             </Link>
                         </div>
                     )}
-                    <Popup isOpen={this.state.popupOpen} onClose={() => this.setState({ popupOpen: false })} onConfirm={this.handleConfirm} />
+                    {/* <Popup isOpen={this.state.popupOpen} onClose={() => this.setState({ popupOpen: false })} onConfirm={this.handleConfirm} /> */}
                     <PopupFinal isOpen={this.state.popupOpenFinal} onClose={() => this.setState({ popupOpenFinal: false })} onConfirm={this.handleConfirmFinal} />
                 </Box>
             </Box>

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-// import { global_search_api_call } from '../app/apis'
 import { global_search_url, unprotected_api_call } from '../api/api'
 import Loader from './Loader'
 import { toast } from 'react-toastify';
@@ -179,12 +178,6 @@ const Search = () => {
                 </button>
             </div>
 
-            {/* 
-                If loading: show loader
-                If searchClicked==True and search.length === 0: show no results found
-                If searchClicked==True and search.length > 0: show search results
-            */}
-
             {loading && <Loader />}
             {searchClicked && search.length === 0 ? (
                 <div className='place-items-center p-5 text-center'>
@@ -206,7 +199,10 @@ const Search = () => {
                                 {search.map((data, key) => (
                                     <div key={key} className='flex flex-col md:flex-row justify-center items-center bg-purple-200 p-4 rounded-lg border border-purple-300 gap-4'>
                                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-grow items-center text-center md:text-left">
-                                            <img src={data.PhotoS3} alt="no image" className='h-[100px] w-[100px] rounded-full mx-auto md:mx-0'/>
+                                            {data.PhotoS3 ? (<img src={data.PhotoS3} alt="no image" className='h-[100px] w-[100px] rounded-full mx-auto md:mx-0'/>) : (
+                                                <img src={""} alt="no image" className='h-[100px] w-[100px] rounded-full mx-auto md:mx-0'/>
+                                            )}
+                                            
                                             <h1>Membership ID: {data.MemberID || "NA"}</h1>
                                             <h1>Name: {`${data.FirstName} ${data.MiddleName} ${data.LastName}`}</h1>
                                             <h1>Village: {data.NativeVillage || "NA"}</h1>

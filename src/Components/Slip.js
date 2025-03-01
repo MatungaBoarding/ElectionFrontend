@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     header: {
       alignItems: 'center',
-      marginBottom: 80
+      marginBottom: 40
     },
     title: {
       fontSize: 20,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       gap: 50,
-      marginBottom: 100
+      marginBottom: 40
     },
     photo: {
       width: 180,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     },
     footer: {
       position: 'absolute',
-      bottom: 20,
+      bottom: 25,
       left: 0,
       right: 0,
       textAlign: 'center',
@@ -61,10 +61,15 @@ const styles = StyleSheet.create({
       color: '#666666'
     },
     signatureLine: {
-      marginTop: 20,
+      marginTop: 14,
+    },
+    ackText: {
+      marginTop: 40,
+      fontSize: 12
     },
     signatureText: {
       marginTop: 10,
+      fontSize: 12
     }
   });
   
@@ -87,24 +92,22 @@ const styles = StyleSheet.create({
             <Text style={styles.text}>{data.id}</Text>
             <Text style={styles.text}>{data.time}</Text>
           </View>
+
+          {/* <View style={styles.wrapper}> */}
+            <Text style={styles.ackText}>
+              I acknowledge that I, {data.name}, was present at Matunga Boarding for voting. I have voted and I sign this slip as proof.
+            </Text>
+            <View style={styles.signatureLine}>
+              <Text>______________________________</Text>
+            </View>
+            <View style={styles.signatureText}>
+              <Text>{data.name}</Text>
+            </View>
+          </View>
   
           <Text style={styles.footer}>Created by: {data.agentName}  ----------  Location: {data.location} ---------- Table Id: {data.tableId}</Text>
-        </View>
-      </Page>
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.wrapper}>
-          <Text style={styles.acknowledgmentText}>
-            I acknowledge that I, {data.name}, was present at Matunga Boarding for voting. I have voted and I sign this slip as proof.
-          </Text>
-          <View style={styles.signatureLine}>
-            <Text>______________________________</Text>
-          </View>
-          <View style={styles.signatureText}>
-            <Text>{data.name}</Text>
-          </View>
-        </View>
-      </Page>
+        {/* </View> */}
+      </Page>        
     </Document>
   );
 
