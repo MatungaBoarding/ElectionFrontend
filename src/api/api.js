@@ -1,5 +1,5 @@
 let base_url = "https://matungaboarding.pythonanywhere.com";
-// let base_url = "https://8a94-68-65-164-148.ngrok-free.app"
+// let base_url = "https://2407-73-193-77-139.ngrok-free.app"
 
 export let login_url = base_url + "/election/election_auth/";
 export let global_search_url = base_url + "/election/global_search/"
@@ -10,6 +10,7 @@ export let ballot_info_url = base_url + "/election/ballot_id_info/"
 export let confirm_presence_url = base_url + "/election/confirm_presence/"
 export let admin_info_url = base_url + "/election/admin_info/"
 export let admin_dashboard_url = base_url + "/election/admin_dashboard_view/"
+export let count_report_url = base_url + "/election/count_report/"
 
 export let register_url = base_url + "/auth/register/";
 export let patient_form_url = base_url + "/service/patient_form/";

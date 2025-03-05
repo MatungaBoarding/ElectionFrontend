@@ -1,6 +1,6 @@
 import React from "react";
 import { unprotected_api_call, member_by_id_url, create_slip_url } from "../api/api"
-import {generatePDF} from "./Slip";
+import { generatePDF } from "./Slip";
 import Photo from './Photo'
 import { GlobalContext } from '../globalConfig/firebase';
 import { VscLoading } from "react-icons/vsc";
@@ -55,6 +55,7 @@ class Info extends React.Component {
             "AppId": this.state.userinfo.ApplicationID,
             "PhotoUrl": url,
             "Agent": user_data["user_email"],
+            "Location": user_data["location"],
             "NonKyc": this.state.userinfo.MemberID === "" ? true : false
         }
         let response = await unprotected_api_call(create_slip_url, data)

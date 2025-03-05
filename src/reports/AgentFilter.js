@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { villages } from '../assets/villname.js'
 import { member_election_filter_url, unprotected_api_call } from '../api/api'
 
-class Filter extends React.Component {
+class AgentFilter extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -26,42 +26,40 @@ class Filter extends React.Component {
     //   let user_list = JSON.parse(localStorage.getItem("user_data"))["details"]["user_list"]
       this.filterFormField = [
         {
-            "name": "Membership ID",
-            "id_name": "memid",
+            "name": "Location",
+            "id_name": "location",
             "type": "text"
         },
         {
-            "name": "Native Village",
-            "id_name": "native_village",
-            "options": villages,
+            "name": "Slip Issued By",
+            "id_name": "slip_issued_by",
+            "options": ["matungas1", "matungas2", "dombivalis1", "dombivalis2"],
             "type": "dropdown"
         },
         {
-            "name": "Date of birth",
-            "id_name": "dob",
-            "type": "date"
+            "name": "Ballot Issued By",
+            "id_name": "ballot_issued_by",
+            "options": ["matungab1", "matungab2", "dombivalib1", "dombivalib2"],
+            "type": "dropdown"
         },
         {
-            "name": "First Name",
-            "id_name": "first_name",
-            "type": "text"
+            "name": "Ballot Issued",
+            "id_name": "ballot_issued",
+            "options": ["Yes", "No"],
+            "type": "dropdown"
         },
         {
-            "name": "Middle Name",
-            "id_name": "middle_name",
-            "type": "text"
+            "name": "Slip Issued",
+            "id_name": "slip_issued",
+            "options": ["Yes", "No"],
+            "type": "dropdown"
         },
         {
-            "name": "Last Name",
-            "id_name": "last_name",
-            "type": "text"
+            "name": "KYC Done?",
+            "id_name": "kyc",
+            "options": ["Yes", "No"],
+            "type": "dropdown"
         },
-        
-        {
-            "name": "Pincode",
-            "id_name": "pincode",
-            "type": "text"
-        }
 
       ]
       this.setState({})
@@ -94,7 +92,7 @@ class Filter extends React.Component {
         <>
             <div className=' w-full flex justify-between'>
                 <h1 className='font-semibold text-lg sm:text-xl py-2 text-center md:text-4xl heading text-purple-600 mb-2'>
-                    Search
+                    Agent Filter
                 </h1>
             </div>
             <div className='flex flex-wrap justify-center '>
@@ -207,4 +205,4 @@ class Filter extends React.Component {
 }
 
 
-export default Filter
+export default AgentFilter

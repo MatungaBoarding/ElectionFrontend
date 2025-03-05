@@ -10,11 +10,13 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { MdLogout, MdAddCircle, MdBarChart, MdFilterAlt, MdCalendarMonth, MdNfc, MdCall } from 'react-icons/md';
+import { MdLogout, MdAddCircle, MdLocationOn, MdFilterAlt, MdHourglassEmpty, MdNfc, MdOutlineFlag, MdNumbers, MdPrivacyTip } from 'react-icons/md';
 import { ListItemButton } from '@mui/material';
 import Filter from './../Components/Filter';
-import SlipIssuedAdminView from '../Components/SlipIssuedAdminView';
-import BallotIssuedAdminView from '../Components/BallotIssuedAdminView';
+import SlipIssuedAdminView from '../reports/SlipIssuedAdminView';
+import BallotIssuedAdminView from '../reports/BallotIssuedAdminView';
+import CountReport from '../reports/CountReport';
+import AgentFilter from '../reports/AgentFilter';
 
 const drawerWidth = 250;
 
@@ -25,7 +27,9 @@ class AdminDashboard extends React.Component {
             isLoading: false,
             filter: true,
             slipIssued: false,
-            ballotIssued: false
+            ballotIssued: false,
+            agent_filter: false,
+            count_report: false,
         }
     }
 
@@ -52,25 +56,28 @@ class AdminDashboard extends React.Component {
                     <Toolbar />
                     <Box sx={{ overflow: 'auto' }}>
                         <List color="primary">
-                            {["Filter", "Slip Issued", "Ballot Issued"].map((t, index) => (
+                            {["Member Filter", "Slip Issued", "Ballot Issued", "Agent Filter", "Count report",].map((t, index) => (
                                 <ListItemButton
                                     key={t}
                                     onClick={() => {
-                                        if (t === "Filter") {
-                                            this.setState({ filter: true, slipIssued: false, ballotIssued: false })
+                                        if (t === "Member Filter") {
+                                            this.setState({ filter: true, slipIssued: false, ballotIssued: false, agent_filter: false, count_report: false })
                                         } else if(t === "Slip Issued"){
-                                            this.setState({ filter: false, slipIssued: true, ballotIssued: false })
+                                            this.setState({ filter: false, slipIssued: true, ballotIssued: false, agent_filter: false, count_report: false })
                                         } else if(t === "Ballot Issued"){
-                                            this.setState({ filter: false, slipIssued: false, ballotIssued: true })
+                                            this.setState({ filter: false, slipIssued: false, ballotIssued: true, agent_filter: false, count_report: false })
+                                        } else if(t === "Agent Filter"){
+                                            this.setState({ filter: false, slipIssued: false, ballotIssued: false, agent_filter: true, count_report: false })
+                                        } else if(t === "Count report"){
+                                            this.setState({ filter: false, slipIssued: false, ballotIssued: false, agent_filter: false, count_report: true })
                                         }
                                     }}>
                                     <ListItemIcon sx={{ color: "#9333ea", fontSize: "25px" }}>
                                         {index ===0 && <MdFilterAlt />}
                                         {index === 1 && <MdAddCircle />}
                                         {index === 2 && <MdNfc />}
-                                        {/* {index === 3 && <MdBarChart/>}
-                                        {index === 4 && <MdFilterAlt />}
-                                        {index === 5 && <MdCall />} */}
+                                        {index === 3 && <MdOutlineFlag />}
+                                        {index === 4 && <MdNumbers />}
                                     </ListItemIcon>
                                     <ListItemText primary={t} sx={{ color: "black" }} />
                                 </ListItemButton>
@@ -95,7 +102,9 @@ class AdminDashboard extends React.Component {
                     {this.state.filter && (<Filter type="admin"/>)}
                     {this.state.slipIssued && (<SlipIssuedAdminView />)}
                     {this.state.ballotIssued && (<BallotIssuedAdminView />)}
-                </Box>  
+                    {this.state.agent_filter && (<AgentFilter />)}
+                    {this.state.count_report && (<CountReport />)}
+                </Box>
 
             </Box>
         )

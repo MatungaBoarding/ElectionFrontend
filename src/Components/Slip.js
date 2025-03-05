@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 
           {/* <View style={styles.wrapper}> */}
             <Text style={styles.ackText}>
-              I acknowledge that I, {data.name}, was present at Matunga Boarding for voting. I have voted and I sign this slip as proof.
+              I, {data.name} agree and understand that surrender of this slip will entitle me to get the ballot paper from {data.location} centre. I also acknowledge that once a slip is issued to me, process is irreversible and I will not be entitled for duplicate slip either at {data.location} or any other centre
             </Text>
             <View style={styles.signatureLine}>
               <Text>______________________________</Text>

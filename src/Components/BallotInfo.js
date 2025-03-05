@@ -115,7 +115,7 @@ class BallotInfo extends React.Component {
         let agent_data = localStorage.getItem("user_data")
         agent_data = JSON.parse(agent_data)
 
-        const response = await unprotected_api_call(confirm_presence_url, { "AppId": id, 'SignImageUrl': "", 'Agent': agent_data["user_email"], 'NonKyc': this.state.userinfo["MemberId"]===""?true:false });
+        const response = await unprotected_api_call(confirm_presence_url, { "AppId": id, 'SignImageUrl': "", 'Agent': agent_data["user_email"], 'NonKyc': this.state.userinfo["MemberId"]===""?true:false, 'Location': agent_data["location"] });
         if (response.status === 200) {
             // link to ./dashboard
             this.setState({ popupOpenFinal: false });
