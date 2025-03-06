@@ -31,10 +31,12 @@ class Login extends React.Component {
       // }else if(!RegexEmail.test(this.state.email)){
       //   this.setState({errMsg: "Enter Valid Email"})
       //   return
-      }else if(!RegexPassword.test(this.state.pwd)){
-        this.setState({errMsg: "Enter Valid Password"})
-        return
-      }else{
+      }
+      // else if(!RegexPassword.test(this.state.pwd)){
+      //   this.setState({errMsg: "Enter Valid Password"})
+      //   return
+      // }
+      else{
         let resp = await unprotected_api_call(login_url, {email: this.state.email, password: this.state.pwd})
         if(resp.status === 200){
           let text = JSON.parse(await resp.text());
