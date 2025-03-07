@@ -5,18 +5,23 @@ const CaptureImage = ({ capturedImage, setCapturedImage, uploadImage, width = 22
   const webcamRef = useRef(null);
   const [deviceId, setDeviceId] = useState(null);
 
-  // Automatically detect the best camera (USB webcam preferred)
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => {
       const videoDevices = devices.filter(device => device.kind === "videoinput");
 
       if (videoDevices.length > 0) {
-        // Prioritize an external USB webcam if available
+        // Check for an external USB webcam first
         const externalCam = videoDevices.find(device => 
           !device.label.toLowerCase().includes("integrated") && !device.label.toLowerCase().includes("built-in")
         );
 
-        setDeviceId(externalCam ? externalCam.deviceId : videoDevices[0].deviceId);
+        // If no USB webcam, check for a back camera (usually labeled "back" or "rear")
+        const backCam = videoDevices.find(device => 
+          device.label.toLowerCase().includes("back") || device.label.toLowerCase().includes("rear")
+        );
+
+        // If no USB webcam or back camera, fallback to the first available (likely front camera)
+        setDeviceId(externalCam ? externalCam.deviceId : backCam ? backCam.deviceId : videoDevices[0].deviceId);
       }
     });
   }, []);
@@ -24,7 +29,7 @@ const CaptureImage = ({ capturedImage, setCapturedImage, uploadImage, width = 22
   const videoConstraints = {
     width: width,
     height: height,
-    deviceId: deviceId ? { exact: deviceId } : undefined, // Select detected camera
+    deviceId: deviceId ? { exact: deviceId } : undefined, // Use detected camera
   };
 
   const capture = useCallback(async () => {
