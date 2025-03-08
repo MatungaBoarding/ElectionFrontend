@@ -1,5 +1,5 @@
-// let base_url = "https://matungaboarding.pythonanywhere.com";
-let base_url = "https://e3d9-2601-602-a200-5d50-bd98-3892-da01-b02f.ngrok-free.app"
+let base_url = "https://matungaboarding.pythonanywhere.com";
+// let base_url = "https://e3d9-2601-602-a200-5d50-bd98-3892-da01-b02f.ngrok-free.app"
 
 export let login_url = base_url + "/election/election_auth/";
 export let global_search_url = base_url + "/election/global_search/"
