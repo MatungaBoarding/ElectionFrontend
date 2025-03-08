@@ -30,6 +30,7 @@ const CaptureImage = ({ capturedImage, setCapturedImage, uploadImage, width = 22
     width: width,
     height: height,
     deviceId: deviceId ? { exact: deviceId } : undefined, // Use detected camera
+    facingMode: "environment" // Use back camera
   };
 
   const capture = useCallback(async () => {

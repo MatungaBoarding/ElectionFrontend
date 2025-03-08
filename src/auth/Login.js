@@ -28,19 +28,13 @@ class Login extends React.Component {
       if(this.state.email === '' || this.state.pwd === ''){
         this.setState({errMsg: "Enter Email and Password"})
         return
-      // }else if(!RegexEmail.test(this.state.email)){
-      //   this.setState({errMsg: "Enter Valid Email"})
-      //   return
       }
-      // else if(!RegexPassword.test(this.state.pwd)){
-      //   this.setState({errMsg: "Enter Valid Password"})
-      //   return
-      // }
       else{
         let resp = await unprotected_api_call(login_url, {email: this.state.email, password: this.state.pwd})
         if(resp.status === 200){
           let text = JSON.parse(await resp.text());
           localStorage.setItem("user_data", JSON.stringify(text["data"]));
+          localStorage.setItem("agentList", JSON.stringify(text["agentList"]));
           this.setState({isLoading: false})
           // console.log()
           window.location.href = "/dashboard"

@@ -1,14 +1,13 @@
 import React from 'react'
 import { VscLoading } from "react-icons/vsc";
 import { Link } from 'react-router-dom'
-import { villages } from '../assets/villname.js'
-import { member_election_filter_url, unprotected_api_call } from '../api/api'
+import { agent_filter_url, unprotected_api_call } from '../api/api'
 
 class AgentFilter extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          memid: "", native_village: "None", first_name: "", last_name: "", dob: "", middle_name: "", pincode: "",
+          location: "", slip_agent: "None", ballot_agent: "None", kyc: "None", slip_no_ballot: "None",
         
           results: [],
 
@@ -22,60 +21,92 @@ class AgentFilter extends React.Component {
     filterFormField = []
 
     componentDidMount() {
-    
-    //   let user_list = JSON.parse(localStorage.getItem("user_data"))["details"]["user_list"]
-      this.filterFormField = [
-        {
-            "name": "Location",
-            "id_name": "location",
-            "type": "text"
-        },
-        {
-            "name": "Slip Issued By",
-            "id_name": "slip_issued_by",
-            "options": ["matungas1", "matungas2", "dombivalis1", "dombivalis2"],
-            "type": "dropdown"
-        },
-        {
-            "name": "Ballot Issued By",
-            "id_name": "ballot_issued_by",
-            "options": ["matungab1", "matungab2", "dombivalib1", "dombivalib2"],
-            "type": "dropdown"
-        },
-        {
-            "name": "Ballot Issued",
-            "id_name": "ballot_issued",
-            "options": ["Yes", "No"],
-            "type": "dropdown"
-        },
-        {
-            "name": "Slip Issued",
-            "id_name": "slip_issued",
-            "options": ["Yes", "No"],
-            "type": "dropdown"
-        },
-        {
-            "name": "KYC Done?",
-            "id_name": "kyc",
-            "options": ["Yes", "No"],
-            "type": "dropdown"
-        },
 
-      ]
-      this.setState({})
+        let agentList = localStorage.getItem("agentList")
+        agentList = JSON.parse(agentList)
+        
+        this.filterFormField = [
+            {
+                "name": "Location",
+                "id_name": "location",
+                "type": "text"
+            },
+            {
+                "name": "Slip Issued By",
+                "id_name": "slip_agent",
+                "options": agentList["slip"],
+                "type": "dropdown"
+            },
+            {
+                "name": "Ballot Issued By",
+                "id_name": "ballot_agent",
+                "options": agentList["ballot"],
+                "type": "dropdown"
+            },
+            {
+                "name": "KYC Done?",
+                "id_name": "kyc",
+                "options": ["Yes", "No"],
+                "type": "dropdown"
+            },
+            {
+                "name": "Slip Issued + Ballot not issued",
+                "id_name": "slip_no_ballot",
+                "options": ["Yes"],
+                "type": "dropdown"
+            }
+
+        ]
+        this.setState({})
+    }
+
+    create_report_api_call = async () => {
+
+        let data = {
+            "location": this.state.location,
+            "slip_agent": this.state.slip_agent,
+            "ballot_agent": this.state.ballot_agent,
+            "kyc": this.state.kyc,
+            "slip_no_ballot": this.state.slip_no_ballot
+        }
+        
+        this.setState({loadingxl: true})
+
+        let response = await unprotected_api_call(agent_filter_url, data, "PUT")
+        if(response.status === 200 || response.status === 201) {
+            let filename = "report.xlsx";
+            response.blob().then(blob => this.download(blob, filename));
+            this.setState({loadingxl: false})
+        } else {
+            this.setState({loadingxl: false})
+            alert("Server Error")
+        }
+    }
+    
+    download = (blob, filename) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
     }
 
     submit = async () => {
         let data = {
-            "FirstName": this.state["first_name"], "MiddleName": this.state["middle_name"],
-            "LastName": this.state["last_name"], "DateOfBirth": this.state["dob"],
-            "NativeVillage": this.state["native_village"], "MemId": this.state["memid"],
-            "Pincode": this.state["pincode"]
+            "location": this.state.location,
+            "slip_agent": this.state.slip_agent,
+            "ballot_agent": this.state.ballot_agent,
+            "kyc": this.state.kyc,
+            "slip_no_ballot": this.state.slip_no_ballot
         }
         
         this.setState({loading: true})
 
-        let response = await unprotected_api_call(member_election_filter_url, data)
+        let response = await unprotected_api_call(agent_filter_url, data)
         if(response.status === 200 || response.status === 201) {
             let resp = await response.json()
             this.setState({results: resp["data"], loading: false})
@@ -134,6 +165,16 @@ class AgentFilter extends React.Component {
                     onClick={this.submit}
                     >
                     {this.state.loading ? <VscLoading className='w-6 h-6 animate-spin' /> : <h1>Search</h1>}
+                </button>
+            </div>
+
+            <div className="w-full flex flex-col items-center mt-5">
+                <button
+                    type="submit"
+                    className="w-1/3 h-12 flex justify-center items-center rounded-lg bg-purple-600 text-purplegray-100 text-lg hover:shadow-md"
+                    onClick={this.create_report_api_call}
+                    >
+                    {this.state.loadingxl ? <VscLoading className='w-6 h-6 animate-spin' /> : <h1>Create Excel</h1>}
                 </button>
             </div>
 
